@@ -1,0 +1,52 @@
+2026-07-07 13:27:11 - Starting C:\Program Files\nodejs\node.exe  --harmony "C:\Users\Willfred Jayem\Desktop\willfred-photography\backend\node_modules\node-windows\lib\wrapper.js" --file "C:\Users\Willfred Jayem\Desktop\willfred-photography\backend\server.js" --scriptoptions= --log "Willfred Photography Backend wrapper" --grow 0.5 --wait 2 --maxrestarts 10 --abortonerror n --stopparentfirst undefined
+2026-07-07 13:27:11 - Started 9256
+2026-07-15 13:45:33 - Stopping willfredphotographybackend.exe
+2026-07-15 13:45:33 - ProcessKill 9256
+2026-07-15 13:45:33 - Shutdown exception
+Message:A system shutdown is in progress.
+
+Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)
+   at System.Management.ManagementScope.InitializeGuts(Object o)
+   at System.Management.ManagementScope.Initialize()
+   at System.Management.ManagementObjectSearcher.Initialize()
+   at System.Management.ManagementObjectSearcher.Get()
+   at winsw.WrapperService.GetChildPids(Int32 pid)
+   at winsw.WrapperService.StopProcessAndChildren(Int32 pid)
+   at winsw.WrapperService.StopIt()
+   at winsw.WrapperService.OnShutdown()
+2026-07-15 13:46:24 - Starting C:\Program Files\nodejs\node.exe  --harmony "C:\Users\Willfred Jayem\Desktop\willfred-photography\backend\node_modules\node-windows\lib\wrapper.js" --file "C:\Users\Willfred Jayem\Desktop\willfred-photography\backend\server.js" --scriptoptions= --log "Willfred Photography Backend wrapper" --grow 0.5 --wait 2 --maxrestarts 10 --abortonerror n --stopparentfirst undefined
+2026-07-15 13:46:25 - Started 7480
+2026-07-15 15:55:00 - Stopping willfredphotographybackend.exe
+2026-07-15 15:55:00 - ProcessKill 7480
+2026-07-15 15:55:01 - Shutdown exception
+Message:Class not registered
+
+Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)
+   at System.Management.ManagementScope.InitializeGuts(Object o)
+   at System.Management.ManagementScope.Initialize()
+   at System.Management.ManagementObjectSearcher.Initialize()
+   at System.Management.ManagementObjectSearcher.Get()
+   at winsw.WrapperService.GetChildPids(Int32 pid)
+   at winsw.WrapperService.StopProcessAndChildren(Int32 pid)
+   at winsw.WrapperService.StopIt()
+   at winsw.WrapperService.OnShutdown()
+2026-07-15 15:56:40 - Starting C:\Program Files\nodejs\node.exe  --harmony "C:\Users\Willfred Jayem\Desktop\willfred-photography\backend\node_modules\node-windows\lib\wrapper.js" --file "C:\Users\Willfred Jayem\Desktop\willfred-photography\backend\server.js" --scriptoptions= --log "Willfred Photography Backend wrapper" --grow 0.5 --wait 2 --maxrestarts 10 --abortonerror n --stopparentfirst undefined
+2026-07-15 15:56:40 - Started 6312
+2026-07-15 15:58:52 - Stopping willfredphotographybackend.exe
+2026-07-15 15:58:52 - ProcessKill 6312
+2026-07-15 15:58:52 - Shutdown exception
+Message:A system shutdown is in progress.
+
+Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)
+   at System.Management.ManagementScope.InitializeGuts(Object o)
+   at System.Management.ManagementScope.Initialize()
+   at System.Management.ManagementObjectSearcher.Initialize()
+   at System.Management.ManagementObjectSearcher.Get()
+   at winsw.WrapperService.GetChildPids(Int32 pid)
+   at winsw.WrapperService.StopProcessAndChildren(Int32 pid)
+   at winsw.WrapperService.StopIt()
+   at winsw.WrapperService.OnShutdown()
+2026-07-15 15:59:35 - Starting C:\Program Files\nodejs\node.exe  --harmony "C:\Users\Willfred Jayem\Desktop\willfred-photography\backend\node_modules\node-windows\lib\wrapper.js" --file "C:\Users\Willfred Jayem\Desktop\willfred-photography\backend\server.js" --scriptoptions= --log "Willfred Photography Backend wrapper" --grow 0.5 --wait 2 --maxrestarts 10 --abortonerror n --stopparentfirst undefined
+2026-07-15 15:59:35 - Started 6884
+2026-07-16 14:51:53 - Starting C:\Program Files\nodejs\node.exe  --harmony "C:\Users\Willfred Jayem\Desktop\willfred-photography\backend\node_modules\node-windows\lib\wrapper.js" --file "C:\Users\Willfred Jayem\Desktop\willfred-photography\backend\server.js" --scriptoptions= --log "Willfred Photography Backend wrapper" --grow 0.5 --wait 2 --maxrestarts 10 --abortonerror n --stopparentfirst undefined
+2026-07-16 14:51:53 - Started 7172

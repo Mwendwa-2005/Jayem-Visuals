@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Jayem Visuals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #0d0d0d;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .login-container {
+            max-width: 420px;
+            width: 100%;
+            background: rgba(30, 30, 30, 0.9);
+            padding: 3rem;
+            border-radius: 16px;
+            border: 1px solid #333;
+        }
+
+        .login-container .logo {
+            text-align: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: #e63946;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-container .logo span {
+            color: #f1faee;
+        }
+
+        .login-container .subtitle {
+            text-align: center;
+            color: #8d99ae;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #f1faee;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #e63946;
+            outline: none;
+            box-shadow: 0 0 15px rgba(230, 57, 70, 0.1);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 1rem;
+            background: #e63946;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(230, 57, 70, 0.3);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .message.error {
+            display: block;
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
+        }
+
+        .message.success {
+            display: block;
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4caf50;
+            color: #4caf50;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #8d99ae;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            color: #e63946;
+        }
+
+        .password-hint {
+            color: #8d99ae;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="logo">Jayem <span>Visuals</span></div>
+        <p class="subtitle">Admin Panel Login</p>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username" required autofocus>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit" class="btn-login" id="loginBtn">
+                <i class="fas fa-lock"></i> Login
+            </button>
+        </form>
+
+        <div id="message" class="message"></div>
+
+        <div class="password-hint">
+            Default: username: <strong>admin</strong> | password: <strong>admin123</strong>
+        </div>
+
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Website
+        </a>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+
+        // Clear any old data on page load
+        localStorage.clear();
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            var username = document.getElementById('username').value.trim();
+            var password = document.getElementById('password').value;
+            var message = document.getElementById('message');
+            var loginBtn = document.getElementById('loginBtn');
+
+            if (!username || !password) {
+                message.className = 'message error';
+                message.textContent = '⚠️ Please enter both username and password.';
+                return;
+            }
+
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+
+            try {
+                var response = await fetch(API_URL + '/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: username, password: password })
+                });
+
+                var data = await response.json();
+
+                if (data.success) {
+                    localStorage.clear();
+                    localStorage.setItem('adminToken', data.token);
+                    localStorage.setItem('adminUser', JSON.stringify(data.user));
+
+                    message.className = 'message success';
+                    message.textContent = '✅ Login successful! Redirecting...';
+
+                    setTimeout(function() {
+                        window.location.href = 'admin.html';
+                    }, 1500);
+                } else {
+                    message.className = 'message error';
+                    message.textContent = '❌ ' + (data.message || 'Login failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                message.className = 'message error';
+                message.textContent = '❌ Could not connect to server. Please make sure the backend is running.';
+            }
+
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = '<i class="fas fa-lock"></i> Login';
+        });
+    </script>
+
+</body>
+</html>

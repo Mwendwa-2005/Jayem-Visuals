@@ -1,0 +1,11 @@
+<service>
+    <id>willfred-photography</id>
+    <name>Willfred Photography</name>
+    <description>Willfred Jayem Photography Website</description>
+    <executable>C:\Program Files\nodejs\node.exe</executable>
+    <arguments>C:\Users\Willfred Jayem\Desktop\willfred-photography\backend\server.js</arguments>
+    <logmode>rotate</logmode>
+    <onfailure action="restart" delay="60 sec"/>
+    <onfailure action="restart" delay="120 sec"/>
+    <stoptimeout>15 sec</stoptimeout>
+</service>

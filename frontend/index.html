@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jayem Visuals | Professional Photographer</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23e63946'/></svg>">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #0d0d0d;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0d0d0d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            color: #e63946;
+            letter-spacing: 5px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid transparent;
+            border-top: 3px solid #e63946;
+            border-radius: 50%;
+            margin: 20px auto;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(230, 57, 70, 0.2);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2rem;
+            color: #e63946;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: #f1faee;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #e63946;
+        }
+
+        .nav-links .btn-nav {
+            padding: 0.5rem 1.5rem;
+            background: #e63946;
+            border-radius: 4px;
+            color: #fff !important;
+        }
+
+        .nav-links .btn-nav:hover {
+            background: #c62828;
+            color: #fff !important;
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 2rem 2rem;
+            text-align: center;
+            background: url('https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?w=1920&q=80') center/cover no-repeat;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 3px;
+            animation: zoomInOut 5s ease-in-out infinite;
+        }
+
+        .hero h1 span {
+            color: #e63946;
+        }
+
+        @keyframes zoomInOut {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #8d99ae;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: #e63946;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(230, 57, 70, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e63946;
+        }
+
+        .btn-outline:hover {
+            background: #e63946;
+        }
+
+        .btn-back {
+            background: transparent;
+            border: 2px solid #e63946;
+            padding: 0.7rem 1.8rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-back:hover {
+            background: #e63946;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #e63946;
+            margin: 10px auto 0;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #8d99ae;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Portfolio Filters */
+        .portfolio-filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.8rem;
+            background: transparent;
+            border: 2px solid #333;
+            color: #8d99ae;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .filter-btn:hover {
+            border-color: #e63946;
+            color: #fff;
+        }
+
+        .filter-btn.active {
+            background: #e63946;
+            border-color: #e63946;
+            color: #fff;
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-card {
+            position: relative;
+            height: 320px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.2);
+        }
+
+        .portfolio-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .portfolio-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        }
+
+        .portfolio-category {
+            color: #e63946;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .portfolio-title {
+            font-size: 1.2rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: rgba(30, 30, 30, 0.7);
+            padding: 2.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .service-card:hover {
+            border-color: #e63946;
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: #e63946;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-card p {
+            color: #8d99ae;
+            line-height: 1.6;
+        }
+
+        /* Testimonials */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: rgba(30, 30, 30, 0.7);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #e63946;
+        }
+
+        .stars {
+            color: #f1c40f;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #8d99ae;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #e63946;
+            object-fit: cover;
+        }
+
+        .testimonial-author h4 {
+            font-size: 1rem;
+        }
+
+        .testimonial-author p {
+            color: #8d99ae;
+            font-size: 0.9rem;
+        }
+
+        /* Forms */
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(30, 30, 30, 0.7);
+            padding: 3rem;
+            border-radius: 12px;
+            border-top: 4px solid #e63946;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #e63946;
+            outline: none;
+            box-shadow: 0 0 15px rgba(230, 57, 70, 0.1);
+        }
+
+        .form-group select option {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-status {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .form-status.success {
+            display: block;
+            background: rgba(46, 125, 50, 0.2);
+            border: 1px solid #2e7d32;
+            color: #66bb6a;
+        }
+
+        .form-status.error {
+            display: block;
+            background: rgba(211, 47, 47, 0.2);
+            border: 1px solid #c62828;
+            color: #ef5350;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 3rem;
+            color: #8d99ae;
+            grid-column: 1 / -1;
+        }
+
+        .loading-spinner i {
+            font-size: 2rem;
+            color: #e63946;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        /* Category View */
+        .category-view {
+            display: none;
+        }
+
+        .category-view.active {
+            display: block;
+        }
+
+        .main-view.hidden {
+            display: none;
+        }
+
+        .category-header {
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .category-header .category-icon {
+            font-size: 3rem;
+            color: #e63946;
+            margin-bottom: 1rem;
+        }
+
+        .category-header h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .category-header p {
+            color: #8d99ae;
+            margin-top: 0.5rem;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .category-grid .portfolio-card {
+            height: 280px;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(13, 13, 13, 0.95);
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid rgba(230, 57, 70, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-col h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .footer-col p,
+        .footer-col a {
+            color: #8d99ae;
+            line-height: 1.8;
+            text-decoration: none;
+            display: block;
+        }
+
+        .footer-col a:hover {
+            color: #e63946;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: #e63946;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: #8d99ae;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                padding: 1rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: rgba(13, 13, 13, 0.98);
+                padding: 2rem;
+                gap: 1rem;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+            
+            .section {
+                padding: 3rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .portfolio-filters {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.4rem 1rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-content">
+            <div class="loader-text">JAYEM VISUALS</div>
+            <div class="loader-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <a href="#home" class="logo" onclick="showMainView()">Jayem <span>Visuals</span></a>
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="nav-links" id="navLinks">
+            <a onclick="showMainView(); scrollToSection('home')">Home</a>
+            <a onclick="showMainView(); scrollToSection('portfolio')">Portfolio</a>
+            <a onclick="showMainView(); scrollToSection('services')">Services</a>
+            <a onclick="showMainView(); scrollToSection('testimonials')">Testimonials</a>
+            <a href="submit-testimonial.html" class="btn-nav">Leave a Review</a>
+            <a onclick="showMainView(); scrollToSection('contact')" class="btn-nav">Book Now</a>
+        </nav>
+    </header>
+
+    <!-- Main View -->
+    <div id="mainView" class="main-view">
+
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1>CAPTURE THE <span>MOMENT</span></h1>
+                <p>Professional photography services specializing in wildlife, weddings, events, and studio work. Let me tell your story through stunning imagery.</p>
+                <div>
+                    <a href="#portfolio" class="btn" onclick="showMainView(); scrollToSection('portfolio')">View Portfolio</a>
+                    <a href="#contact" class="btn btn-outline" onclick="showMainView(); scrollToSection('contact')">Book a Session</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section class="section" id="portfolio">
+            <h2 class="section-title">PORTFOLIO</h2>
+            <p class="section-subtitle">Click a category to view all images in that collection</p>
+            
+            <div class="portfolio-filters" id="filterButtons">
+                <button class="filter-btn" data-category="all" onclick="showCategory('all')">
+                    <i class="fas fa-th"></i> All
+                </button>
+                <button class="filter-btn" data-category="wildlife" onclick="showCategory('wildlife')">
+                    <i class="fas fa-paw"></i> Wildlife
+                </button>
+                <button class="filter-btn" data-category="wedding" onclick="showCategory('wedding')">
+                    <i class="fas fa-heart"></i> Wedding
+                </button>
+                <button class="filter-btn" data-category="event" onclick="showCategory('event')">
+                    <i class="fas fa-calendar-alt"></i> Event
+                </button>
+                <button class="filter-btn" data-category="studio" onclick="showCategory('studio')">
+                    <i class="fas fa-studio"></i> Studio
+                </button>
+                <button class="filter-btn" data-category="outdoor" onclick="showCategory('outdoor')">
+                    <i class="fas fa-mountain"></i> Outdoor
+                </button>
+                <button class="filter-btn" data-category="indoor" onclick="showCategory('indoor')">
+                    <i class="fas fa-home"></i> Indoor
+                </button>
+            </div>
+            
+            <div class="portfolio-grid" id="portfolioGrid">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Loading portfolio...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="section" id="services">
+            <h2 class="section-title">SERVICES</h2>
+            <div class="services-grid" id="servicesGrid">
+                <!-- Services loaded by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="section" id="testimonials">
+            <h2 class="section-title">TESTIMONIALS</h2>
+            <div class="testimonial-grid" id="testimonialGrid">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Loading testimonials...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact/Booking Section -->
+        <section class="section" id="contact">
+            <h2 class="section-title">BOOK A SESSION</h2>
+            <div class="form-container">
+                <form id="bookingForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookingName">Full Name</label>
+                            <input type="text" id="bookingName" required placeholder="Your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingEmail">Email</label>
+                            <input type="email" id="bookingEmail" required placeholder="your@email.com">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookingPhone">Phone Number</label>
+                            <input type="tel" id="bookingPhone" required placeholder="+1234567890">
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingDate">Preferred Date</label>
+                            <input type="date" id="bookingDate" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingService">Service Type</label>
+                        <select id="bookingService" required>
+                            <option value="">Select a service</option>
+                            <option value="wildlife">Wildlife Photography</option>
+                            <option value="wedding">Wedding Photography</option>
+                            <option value="event">Event Photography</option>
+                            <option value="studio">Studio Photography</option>
+                            <option value="outdoor">Outdoor Photography</option>
+                            <option value="indoor">Indoor Photography</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingLocation">Location</label>
+                        <input type="text" id="bookingLocation" placeholder="City, State, or Venue">
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingMessage">Special Requests</label>
+                        <textarea id="bookingMessage" rows="4" placeholder="Any special requests or details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">Submit Booking Request</button>
+                    <div id="bookingStatus" class="form-status"></div>
+                </form>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Category View -->
+    <div id="categoryView" class="category-view">
+        <section class="section">
+            <div class="category-header">
+                <div class="category-icon" id="categoryIcon"><i class="fas fa-th"></i></div>
+                <h2 id="categoryTitle">Category</h2>
+                <p id="categoryDescription">Viewing all images in this collection</p>
+                <button class="btn btn-back" onclick="showMainView()">
+                    <i class="fas fa-arrow-left"></i> Back to All Categories
+                </button>
+            </div>
+            <div class="category-grid" id="categoryGrid">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Loading category images...</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>JAYEM VISUALS</h3>
+                <p>Professional photography services specializing in wildlife, weddings, events, and studio work. Capturing your special moments with creativity and passion.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <a onclick="showMainView(); scrollToSection('home')">Home</a>
+                <a onclick="showMainView(); scrollToSection('portfolio')">Portfolio</a>
+                <a onclick="showMainView(); scrollToSection('services')">Services</a>
+                <a onclick="showMainView(); scrollToSection('testimonials')">Testimonials</a>
+                <a onclick="showMainView(); scrollToSection('contact')">Book Now</a>
+            </div>
+            <div class="footer-col">
+                <h3>Contact</h3>
+                <p>📧 willfredjayem@gmail.com</p>
+                <p>📞 +254112034132</p>
+                <p>📍 Kimumu Junction, Eldoret</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-pinterest-p"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 Jayem Visuals. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // API Configuration
+        // ============================================
+        const API_URL = 'http://localhost:5000/api';
+
+        // ============================================
+        // DOM Elements
+        // ============================================
+        const mainView = document.getElementById('mainView');
+        const categoryView = document.getElementById('categoryView');
+        const portfolioGrid = document.getElementById('portfolioGrid');
+        const categoryGrid = document.getElementById('categoryGrid');
+        const servicesGrid = document.getElementById('servicesGrid');
+        const testimonialGrid = document.getElementById('testimonialGrid');
+        let allPortfolioItems = [];
+
+        // Category icons and descriptions
+        const categoryInfo = {
+            all: { icon: 'fa-th', title: 'All Categories', description: 'Viewing all photography collections' },
+            wildlife: { icon: 'fa-paw', title: 'Wildlife Photography', description: 'Capturing the beauty of nature and animals in their natural habitat' },
+            wedding: { icon: 'fa-heart', title: 'Wedding Photography', description: 'Documenting your special day with timeless and emotional images' },
+            event: { icon: 'fa-calendar-alt', title: 'Event Photography', description: 'Professional coverage for corporate events, parties, and special occasions' },
+            studio: { icon: 'fa-studio', title: 'Studio Photography', description: 'Professional studio sessions with expert lighting and creative direction' },
+            outdoor: { icon: 'fa-mountain', title: 'Outdoor Photography', description: 'Breathtaking outdoor portrait sessions in beautiful natural settings' },
+            indoor: { icon: 'fa-home', title: 'Indoor Photography', description: 'Intimate indoor portraits and family sessions in the comfort of your home' }
+        };
+
+        // ============================================
+        // Hide Loader
+        // ============================================
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var loader = document.getElementById('loader');
+                if (loader) {
+                    loader.classList.add('hidden');
+                }
+            }, 1000);
+        });
+
+        // ============================================
+        // Mobile Menu Toggle
+        // ============================================
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+
+        // ============================================
+        // View Management
+        // ============================================
+        function showMainView() {
+            mainView.style.display = 'block';
+            categoryView.classList.remove('active');
+            categoryView.style.display = 'none';
+            document.getElementById('navLinks').classList.remove('open');
+            
+            setTimeout(function() {
+                var portfolioSection = document.getElementById('portfolio');
+                if (portfolioSection) {
+                    var offset = 80;
+                    var position = portfolioSection.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top: position, behavior: 'smooth' });
+                }
+            }, 100);
+        }
+
+        function showCategory(category) {
+            mainView.style.display = 'none';
+            categoryView.style.display = 'block';
+            categoryView.classList.add('active');
+            document.getElementById('navLinks').classList.remove('open');
+            
+            const info = categoryInfo[category] || categoryInfo.all;
+            document.getElementById('categoryIcon').innerHTML = '<i class="fas ' + info.icon + '"></i>';
+            document.getElementById('categoryTitle').textContent = info.title;
+            document.getElementById('categoryDescription').textContent = info.description;
+            
+            loadCategoryImages(category);
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToSection(id) {
+            setTimeout(function() {
+                var element = document.getElementById(id);
+                if (element) {
+                    var offset = 80;
+                    var position = element.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top: position, behavior: 'smooth' });
+                }
+            }, 100);
+        }
+
+        // ============================================
+        // Load Portfolio
+        // ============================================
+        function loadPortfolio() {
+            portfolioGrid.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i><span>Loading portfolio...</span></div>';
+            
+            fetch(API_URL + '/portfolio')
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    if (data.success && data.data.length > 0) {
+                        allPortfolioItems = data.data;
+                        renderPortfolioItems(data.data);
+                    } else {
+                        portfolioGrid.innerHTML = '<div class="loading-spinner"><i class="fas fa-camera"></i><span>No portfolio items available</span></div>';
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error loading portfolio:', error);
+                    portfolioGrid.innerHTML = '<div class="loading-spinner"><i class="fas fa-exclamation-circle"></i><span>Could not load portfolio. Make sure the backend is running.</span></div>';
+                });
+        }
+
+        function renderPortfolioItems(items) {
+            if (!items || items.length === 0) {
+                portfolioGrid.innerHTML = '<div class="loading-spinner"><i class="fas fa-camera"></i><span>No portfolio items available</span></div>';
+                return;
+            }
+
+            var html = '';
+            items.forEach(function(item) {
+                html += '<div class="portfolio-card" data-category="' + item.category + '"><img src="' + item.imageUrl + '" alt="' + item.title + '" loading="lazy"><div class="portfolio-overlay"><span class="portfolio-category">' + item.category + '</span><h3 class="portfolio-title">' + item.title + '</h3></div></div>';
+            });
+            portfolioGrid.innerHTML = html;
+        }
+
+        // ============================================
+        // Load Category Images
+        // ============================================
+        function loadCategoryImages(category) {
+            categoryGrid.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i><span>Loading ' + category + ' images...</span></div>';
+            
+            var url = API_URL + '/portfolio';
+            if (category && category !== 'all') {
+                url += '?category=' + category;
+            }
+            
+            fetch(url)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    if (data.success && data.data.length > 0) {
+                        var html = '';
+                        data.data.forEach(function(item) {
+                            html += '<div class="portfolio-card"><img src="' + item.imageUrl + '" alt="' + item.title + '" loading="lazy"><div class="portfolio-overlay"><span class="portfolio-category">' + item.category + '</span><h3 class="portfolio-title">' + item.title + '</h3></div></div>';
+                        });
+                        categoryGrid.innerHTML = html;
+                    } else {
+                        categoryGrid.innerHTML = '<div class="loading-spinner"><i class="fas fa-camera"></i><span>No images found in this category</span></div>';
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error loading category:', error);
+                    categoryGrid.innerHTML = '<div class="loading-spinner"><i class="fas fa-exclamation-circle"></i><span>Could not load category images</span></div>';
+                });
+        }
+
+        // ============================================
+        // Load Services
+        // ============================================
+        function loadServices() {
+            var services = [
+                {
+                    icon: 'fa-camera-retro',
+                    title: 'Wildlife Photography',
+                    description: 'Capture the beauty of nature in their natural habitats. Perfect for safari adventures and nature documentaries.'
+                },
+                {
+                    icon: 'fa-heart',
+                    title: 'Wedding Photography',
+                    description: 'Document your special day with timeless photography. From engagement to the big day, we capture every moment.'
+                },
+                {
+                    icon: 'fa-calendar-alt',
+                    title: 'Event Photography',
+                    description: 'Professional coverage for corporate events, parties, concerts, and special occasions.'
+                },
+                {
+                    icon: 'fa-studio',
+                    title: 'Studio Photography',
+                    description: 'Professional studio sessions with expert lighting, backdrops, and creative direction for portraits and fashion.'
+                },
+                {
+                    icon: 'fa-mountain',
+                    title: 'Outdoor Photography',
+                    description: 'Breathtaking outdoor portrait sessions in beautiful natural settings. Perfect for engagements and family photos.'
+                },
+                {
+                    icon: 'fa-home',
+                    title: 'Indoor Photography',
+                    description: 'Intimate indoor portraits and family sessions in the comfort of your home with natural lighting.'
+                }
+            ];
+            
+            var html = '';
+            services.forEach(function(service) {
+                html += '<div class="service-card"><div class="service-icon"><i class="fas ' + service.icon + '"></i></div><h3>' + service.title + '</h3><p>' + service.description + '</p></div>';
+            });
+            servicesGrid.innerHTML = html;
+        }
+
+        // ============================================
+        // Load Testimonials
+        // ============================================
+        function loadTestimonials() {
+            fetch(API_URL + '/testimonials')
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    if (data.success && data.data.length > 0) {
+                        var html = '';
+                        data.data.forEach(function(item) {
+                            var stars = '';
+                            for (var i = 0; i < Math.floor(item.rating); i++) {
+                                stars += '<i class="fas fa-star"></i>';
+                            }
+                            var avatarUrl = item.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(item.name) + '&background=0D0D0D&color=e63946&size=100';
+                            html += '<div class="testimonial-card"><div class="stars">' + stars + '</div><p class="testimonial-text">"' + item.content + '"</p><div class="testimonial-author"><img src="' + avatarUrl + '" alt="' + item.name + '"><div><h4>' + item.name + '</h4><p>' + item.service + ' Photography</p></div></div></div>';
+                        });
+                        testimonialGrid.innerHTML = html;
+                    } else {
+                        testimonialGrid.innerHTML = '<div class="loading-spinner"><i class="fas fa-comment"></i><span>No testimonials yet. Be the first to leave a review!</span></div>';
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error loading testimonials:', error);
+                    testimonialGrid.innerHTML = '<div class="loading-spinner"><i class="fas fa-exclamation-circle"></i><span>Could not load testimonials</span></div>';
+                });
+        }
+
+        // ============================================
+        // Booking Form Handler
+        // ============================================
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            var formData = {
+                name: document.getElementById('bookingName').value,
+                email: document.getElementById('bookingEmail').value,
+                phone: document.getElementById('bookingPhone').value,
+                date: document.getElementById('bookingDate').value,
+                service: document.getElementById('bookingService').value,
+                location: document.getElementById('bookingLocation').value,
+                message: document.getElementById('bookingMessage').value
+            };
+            
+            var status = document.getElementById('bookingStatus');
+            
+            if (!formData.name || !formData.email || !formData.phone || !formData.date || !formData.service) {
+                status.className = 'form-status error';
+                status.textContent = 'Please fill in all required fields.';
+                status.style.display = 'block';
+                return;
+            }
+            
+            fetch(API_URL + '/bookings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                if (data.success) {
+                    status.className = 'form-status success';
+                    status.textContent = '✅ Booking submitted successfully! We will contact you soon.';
+                    status.style.display = 'block';
+                    document.getElementById('bookingForm').reset();
+                } else {
+                    status.className = 'form-status error';
+                    status.textContent = '❌ ' + (data.message || 'Something went wrong. Please try again.');
+                    status.style.display = 'block';
+                }
+            })
+            .catch(function(error) {
+                console.error('Booking error:', error);
+                status.className = 'form-status error';
+                status.textContent = '❌ Could not connect to server. Please make sure the backend is running.';
+                status.style.display = 'block';
+            });
+            
+            setTimeout(function() {
+                status.style.display = 'none';
+            }, 8000);
+        });
+
+        // ============================================
+        // Initialize Everything
+        // ============================================
+        function init() {
+            console.log('📸 Jayem Visuals website loading...');
+            loadServices();
+            loadTestimonials();
+            loadPortfolio();
+            console.log('✅ Jayem Visuals website loaded successfully!');
+        }
+
+        // Run when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+
+</body>
+</html>
