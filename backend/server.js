@@ -13,6 +13,8 @@ const app = express();
 // Middleware - AFTER app is initialized
 app.use(cors());
 app.use(express.json());
+// Serve uploaded files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Initialize SQLite Database
 const db = new sqlite3.Database(path.join(__dirname, 'portfolio.db'));

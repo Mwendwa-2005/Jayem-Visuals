@@ -729,6 +729,7 @@
                 </div>
             </div>
 
+            <!-- Add Portfolio Form with File Upload -->
             <div class="add-form">
                 <div class="form-title"><i class="fas fa-plus-circle"></i> Add New Portfolio Item</div>
                 <form id="addPortfolioForm">
@@ -750,10 +751,29 @@
                             </select>
                         </div>
                     </div>
+                    
+                    <!-- File Upload -->
                     <div class="form-group">
-                        <label>Image URL *</label>
-                        <input type="url" id="pImageUrl" placeholder="https://images.unsplash.com/photo-xxx" required>
+                        <label>📁 Upload Image from PC</label>
+                        <input type="file" id="pImageFile" accept="image/*" style="padding:0.5rem;background:rgba(255,255,255,0.05);border:1px solid #333;border-radius:4px;color:#fff;width:100%;">
+                        <small style="color:#8d99ae;display:block;margin-top:0.3rem;">Choose an image from your computer (JPG, PNG, GIF, WebP - Max 5MB)</small>
                     </div>
+                    
+                    <!-- URL Fallback -->
+                    <div class="form-group">
+                        <label>OR Enter Image URL</label>
+                        <input type="url" id="pImageUrl" placeholder="https://images.unsplash.com/photo-xxx">
+                        <small style="color:#8d99ae;display:block;margin-top:0.3rem;">Paste a direct image URL (leave empty if uploading from PC)</small>
+                    </div>
+                    
+                    <!-- Image Preview -->
+                    <div class="form-group">
+                        <label>Image Preview</label>
+                        <div id="imagePreview" style="margin-top:0.5rem;">
+                            <img id="previewImg" src="" alt="Preview" style="max-width:200px;max-height:200px;border-radius:8px;border:1px solid #333;display:none;">
+                        </div>
+                    </div>
+                    
                     <div class="form-group">
                         <label>Description</label>
                         <textarea id="pDescription" placeholder="Brief description of the image..."></textarea>
@@ -864,18 +884,16 @@
         const API_URL = 'https://jayem-visuals-api.onrender.com/api';
 
         // ============================================
-        // Admin Authentication Check - FORCES LOGIN
+        // Admin Authentication Check
         // ============================================
         (function checkAuth() {
             const token = localStorage.getItem('adminToken');
             
-            // If no token, redirect to login IMMEDIATELY
             if (!token) {
                 window.location.href = 'login.html';
                 return;
             }
             
-            // Verify token with backend
             fetch(API_URL + '/auth/verify', {
                 headers: {
                     'Authorization': 'Bearer ' + token
@@ -1089,7 +1107,11 @@
                 
                 var html = '<table><thead><tr><th>Image</th><th>Title</th><th>Category</th><th>Featured</th><th>Actions</th></tr></thead><tbody>';
                 data.data.forEach(function(item) {
-                    html += '<tr><td><img src="' + item.imageUrl + '" alt="' + item.title + '" style="width:60px;height:60px;object-fit:cover;border-radius:4px;"></td><td><strong>' + item.title + '</strong></td><td>' + item.category + '</td><td>' + (item.featured ? '⭐ Yes' : '-') + '</td><td><button class="btn-action btn-delete" onclick="deletePortfolioItem(' + item.id + ')"><i class="fas fa-trash"></i> Delete</button></td></tr>';
+                    var imgSrc = item.imageUrl;
+                    if (imgSrc && imgSrc.startsWith('/uploads/')) {
+                        imgSrc = API_URL.replace('/api', '') + imgSrc;
+                    }
+                    html += '<tr><td><img src="' + imgSrc + '" alt="' + item.title + '" style="width:60px;height:60px;object-fit:cover;border-radius:4px;"></td><td><strong>' + item.title + '</strong></td><td>' + item.category + '</td><td>' + (item.featured ? '⭐ Yes' : '-') + '</td><td><button class="btn-action btn-delete" onclick="deletePortfolioItem(' + item.id + ')"><i class="fas fa-trash"></i> Delete</button></td></tr>';
                 });
                 html += '</tbody></table>';
                 container.innerHTML = html;
@@ -1098,6 +1120,7 @@
             }
         }
 
+        // Add Portfolio Form with File Upload
         document.getElementById('addPortfolioForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -1106,13 +1129,34 @@
             var imageUrl = document.getElementById('pImageUrl').value;
             var description = document.getElementById('pDescription').value;
             var featured = document.getElementById('pFeatured').checked;
+            var imageFile = document.getElementById('pImageFile').files[0];
             var status = document.getElementById('portfolioFormStatus');
+            
+            if (!imageFile && !imageUrl) {
+                status.textContent = '❌ Please upload an image or provide an image URL';
+                status.style.color = '#f44336';
+                return;
+            }
+            
+            var formData = new FormData();
+            formData.append('title', title);
+            formData.append('category', category);
+            formData.append('description', description);
+            formData.append('featured', featured);
+            
+            if (imageFile) {
+                formData.append('image', imageFile);
+            } else {
+                formData.append('imageUrl', imageUrl);
+            }
+            
+            status.textContent = '⏳ Uploading...';
+            status.style.color = '#ffc107';
             
             try {
                 var response = await fetch(API_URL + '/portfolio/admin', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ title: title, category: category, description: description, imageUrl: imageUrl, featured: featured })
+                    body: formData
                 });
                 var data = await response.json();
                 
@@ -1121,6 +1165,7 @@
                     status.textContent = '✅ ' + data.message;
                     status.style.color = '#4caf50';
                     this.reset();
+                    document.getElementById('previewImg').style.display = 'none';
                     loadPortfolioList();
                     loadDashboard();
                     setTimeout(function() { status.textContent = ''; }, 5000);
@@ -1130,9 +1175,43 @@
                     status.style.color = '#f44336';
                 }
             } catch (error) {
+                console.error('Upload error:', error);
                 showToast('Error connecting to server', 'error');
                 status.textContent = '❌ Could not connect to server';
                 status.style.color = '#f44336';
+            }
+        });
+
+        // Image Preview for File Upload
+        document.getElementById('pImageFile').addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            var preview = document.getElementById('previewImg');
+            
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+
+        // Image Preview for URL
+        document.getElementById('pImageUrl').addEventListener('input', function(e) {
+            var url = e.target.value;
+            var preview = document.getElementById('previewImg');
+            
+            if (url) {
+                preview.src = url;
+                preview.style.display = 'block';
+                preview.onerror = function() {
+                    preview.style.display = 'none';
+                };
+            } else {
+                preview.style.display = 'none';
             }
         });
 
