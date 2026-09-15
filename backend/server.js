@@ -33,6 +33,33 @@ db.serialize(() => {
         password TEXT NOT NULL,
         role TEXT DEFAULT 'user',
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+    // Create default admin user if none exists
+    db.get('SELECT * FROM admin_users WHERE username = ?', ['admin'], (err, row) => {
+        if (err) {
+            console.error('Error checking admin user:', err.message);
+            return;
+        }
+        
+        if (!row) {
+            const bcrypt = require('bcryptjs');
+            const hashedPassword = bcrypt.hashSync('admin123', 10);
+            db.run(
+                'INSERT INTO admin_users (username, password, email) VALUES (?, ?, ?)',
+                ['admin', hashedPassword, 'admin@jayemvisuals.com'],
+                function(err) {
+                    if (err) {
+                        console.error('Error creating admin user:', err.message);
+                    } else {
+                        console.log('✅ Default admin user created!');
+                        console.log('📧 Username: admin');
+                        console.log('🔑 Password: admin123');
+                    }
+                }
+            );
+        } else {
+            console.log('✅ Admin user already exists');
+        }
+    });
     )`);
 
     // Portfolio table
@@ -82,7 +109,7 @@ app.set('db', db);
 // Test route
 app.get('/', (req, res) => {
     res.json({ 
-        message: 'Willfred Photography API is running!',
+        message:"Jayem Visuals API is running!",
         database: 'SQLite',
         endpoints: {
             portfolio: '/api/portfolio',
