@@ -245,14 +245,14 @@ function sendCompletionEmail(email, name, service) {
                     <h2 style="color: #e63946; margin-bottom: 10px;">⭐ Rate Your Experience</h2>
                     <p style="color: #8d99ae;">How was your experience with us? Your feedback helps us improve!</p>
                     <div style="display: flex; justify-content: center; gap: 10px; font-size: 40px; margin: 20px 0;">
-                        <a href="http://localhost:3000/rate.html?token=${ratingToken}&rating=1" style="text-decoration: none; color: #ffd700; transition: transform 0.3s;">⭐</a>
-                        <a href="http://localhost:3000/rate.html?token=${ratingToken}&rating=2" style="text-decoration: none; color: #ffd700; transition: transform 0.3s;">⭐⭐</a>
-                        <a href="http://localhost:3000/rate.html?token=${ratingToken}&rating=3" style="text-decoration: none; color: #ffd700; transition: transform 0.3s;">⭐⭐⭐</a>
-                        <a href="http://localhost:3000/rate.html?token=${ratingToken}&rating=4" style="text-decoration: none; color: #ffd700; transition: transform 0.3s;">⭐⭐⭐⭐</a>
-                        <a href="http://localhost:3000/rate.html?token=${ratingToken}&rating=5" style="text-decoration: none; color: #ffd700; transition: transform 0.3s;">⭐⭐⭐⭐⭐</a>
+                        <a href="https://jayem-visuals.vercel.app/rate.html?token=${ratingToken}&rating=1" style="text-decoration: none; color: #ffd700; transition: transform 0.3s;">⭐</a>
+                        <a href="https://jayem-visuals.vercel.app/rate.html?token=${ratingToken}&rating=2" style="text-decoration: none; color: #ffd700; transition: transform 0.3s;">⭐⭐</a>
+                        <a href="https://jayem-visuals.vercel.app/rate.html?token=${ratingToken}&rating=3" style="text-decoration: none; color: #ffd700; transition: transform 0.3s;">⭐⭐⭐</a>
+                        <a href="https://jayem-visuals.vercel.app/rate.html?token=${ratingToken}&rating=4" style="text-decoration: none; color: #ffd700; transition: transform 0.3s;">⭐⭐⭐⭐</a>
+                        <a href="https://jayem-visuals.vercel.app/rate.html?token=${ratingToken}&rating=5" style="text-decoration: none; color: #ffd700; transition: transform 0.3s;">⭐⭐⭐⭐⭐</a>
                     </div>
                     <p style="font-size: 12px; color: #8d99ae;">Click a star above to rate your experience</p>
-                    <p style="font-size: 12px; color: #8d99ae; margin-top: 10px;">Or visit: <a href="http://localhost:3000/#testimonials" style="color: #e63946;">Leave a Testimonial</a></p>
+                    <p style="font-size: 12px; color: #8d99ae; margin-top: 10px;">Or visit: <a href="https://jayem-visuals.vercel.app/#testimonials" style="color: #e63946;">Leave a Testimonial</a></p>
                 </div>
                 <p>We would love to hear your feedback and see you again soon!</p>
                 <br>

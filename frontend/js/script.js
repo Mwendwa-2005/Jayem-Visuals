@@ -1,5 +1,5 @@
 // API Configuration
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://jayem-visuals-api.onrender.com/api';
 
 // DOM Elements
 const loader = document.getElementById('loader');

@@ -12,7 +12,7 @@ Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$projectPath\
 Start-Sleep -Seconds 2
 
 Write-Host ""
-Write-Host "Starting Frontend (http://localhost:3000)..." -ForegroundColor Yellow
+Write-Host "Starting Frontend (https://jayem-visuals.vercel.app)..." -ForegroundColor Yellow
 Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$projectPath\frontend'; Write-Host 'Frontend Server' -ForegroundColor Cyan; live-server --port=3000"
 
 Write-Host ""
@@ -20,8 +20,8 @@ Write-Host "========================================" -ForegroundColor Green
 Write-Host "All services started!" -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Green
 Write-Host ""
-Write-Host "Frontend: http://localhost:3000" -ForegroundColor White
-Write-Host "Admin: http://localhost:3000/admin.html" -ForegroundColor White
+Write-Host "Frontend: https://jayem-visuals.vercel.app" -ForegroundColor White
+Write-Host "Admin: https://jayem-visuals.vercel.app/admin.html" -ForegroundColor White
 Write-Host "Backend: http://localhost:5000" -ForegroundColor White
 Write-Host ""
 Write-Host "Press Ctrl+C in each terminal to stop the services." -ForegroundColor Gray

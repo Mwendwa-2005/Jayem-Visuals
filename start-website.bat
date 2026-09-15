@@ -20,8 +20,8 @@ echo ========================================
 echo ✅ Website is now running!
 echo ========================================
 echo.
-echo 📍 Frontend: http://localhost:3000
-echo 📍 Admin:    http://localhost:3000/admin.html
+echo 📍 Frontend: https://jayem-visuals.vercel.app
+echo 📍 Admin:    https://jayem-visuals.vercel.app/admin.html
 echo 📍 Backend:  http://localhost:5000
 echo.
 echo Close this window to stop the servers.
